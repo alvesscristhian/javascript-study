@@ -1,0 +1,5 @@
+-- If pode ser sempre usado sozinho
+-- Sempre que utilizo a palavra else, preciso de um if antes
+-- Eu posso ter varios else ifs na checagem
+-- Só posso ter um else na checagem
+-- Em casos de apenas 2 condições, podemos usar somente o if else
