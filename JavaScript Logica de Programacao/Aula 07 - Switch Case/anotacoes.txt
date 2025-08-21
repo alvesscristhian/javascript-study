@@ -1,0 +1,13 @@
+-------- SWITCH CASE -------
+
+switch ("variavel") {
+    case "valor":
+        "ação"
+        break
+    case "valor":
+        "açao2"
+        break
+    default: // Como se fosse um else
+        "açao-final"
+        (Não precisa de break)
+}
