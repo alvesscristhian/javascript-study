@@ -1,0 +1,4 @@
+--------------- OPERADORES DE LÓGICOS ----------------
+&& -> AND = Todas as expressões precisam ser verdadeiras para retornar true
+|| -> OR
+! -> NOT
