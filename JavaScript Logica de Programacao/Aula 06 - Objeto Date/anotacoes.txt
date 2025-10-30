@@ -1,0 +1,20 @@
+---------- FORMULA PARA ACHAR HORAS ---------
+
+60 * 60 = 1 hora | * (quantidade de horas) | * 1000 = transforma milisegundos por segundos
+
+Exemplos: const tresHoras = 60 * 60 * 3 * 1000; | const umDia = 60 * 60 * 24 * 1000;
+
+Para criar um date do marco zero (01/01/1970 Timestamp Unix) = const data = new Date(0 + tresHoras); // Devemos add 3 horas por conta do nosso fuso horario GMT-03 horas!
+
+
+const data = new Date('2023-08-18 22:47:10.500'); // Como criar uma data com strings
+console.log("Ano", data.getFullYear()); // Ano em js
+console.log("Mês", data.getMonth() + 1); // Mês em js começa do zero
+console.log("Dia", data.getDate()); // Dia em js
+console.log("Hora", data.getHours()); // Hora em js
+console.log("Minuto", data.getMinutes()); // Minuto em js
+console.log("Segundo", data.getSeconds()); // Segundo em js
+console.log("Milisegundo", data.getMilliseconds()); // Ms em js
+console.log("Dia semana", data.getDay()); // 0 - Domingo, 6 Sábado
+console.log(data.toString()); // Transoforma o valor da data em uma string para ficar facil ao exibirna tela
+console.log(Date.now()); // Obter os milesimos de segundos do marco zero até atual
