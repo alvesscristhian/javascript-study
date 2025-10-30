@@ -1,0 +1,20 @@
+
+                                Comando	Função
+
+document.getElementById("id")	                                                 Seleciona um elemento pelo ID
+document.querySelector("seletor")	                          Seleciona o primeiro que bater com o seletor CSS
+document.querySelectorAll("seletor")	                  Seleciona todos os elementos que batem com o seletor
+document.createElement("tag")	                                                    Cria um novo elemento HTML
+element.appendChild(outroElemento)	                                        Insere um elemento dentro de outro
+element.innerText	                                               Pega ou muda o texto visível de um elemento
+element.innerHTML	                                                      Pega ou muda o conteúdo HTML interno
+element.setAttribute("atributo", "valor")	                                    Define um atributo do elemento
+element.classList.add("classe")	                                                       Adiciona uma classe CSS
+element.classList.remove("classe")	                                                     Remove uma classe CSS
+element.addEventListener("evento", function)                                 	Adiciona um evento ao elemento
+
+                                Comando Estilo
+
+getComputedStyle(document.local)                                      Pega todos os estilos CSS desse elemento
+variavelQueArmazenou.estilo(background, color, etc...)                Escolhe no JavaScript o estilo escolhido
+variavel.style.estilo                                                    Aplica o estilo escolhido na variavel
