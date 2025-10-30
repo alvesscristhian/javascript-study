@@ -1,0 +1,36 @@
+----------------- CRIA E ATRIBUI VALORES A VARIAVEL -----------
+
+const numeros = [ [1, 2, 3], [4, 5, 6], [7, 8, 9] ]
+
+        I 0      I 1     I 2
+const [lista1, lista2, lista3] = numeros;
+       VAR 1    VAR2    VAR3
+
+
+* PODEMOS PULAR OS INDICES E DEIXAR NULO (ex: Pegar só impares)
+const numeros = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+       I 0   I 2     I 4      I 6      I 8
+const [um, , tres, , cinco, , sete, , nove] = numeros;
+      var1   var2    var3     var4    var5
+
+
+********************* EM OBJETOS ****************
+const pessoa = {
+    nome: 'Cristhian',
+    sobrenome: 'Alves',
+    idade: 18,
+    endereco: {
+        rua: 'Rua Stelio Machado Loureiro',
+        numero: 721
+    }
+};
+
+// Posso alterar o nome da VARIAVEL igual o exemplo abaixo, tambem posso criar uma e deixar um valor undefined com ''
+
+const { nome: novoNome = '' } = pessoa;
+
+// Mais exemplos
+
+const { endereco: { rua, numero} } = pessoa;
+console.log(rua, numero);
