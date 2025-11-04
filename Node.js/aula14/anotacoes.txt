@@ -1,0 +1,3 @@
+dotenv: Arquivo para armazenar suas chaves e não expor no repositório
+mongoose: Responsável por validar os dados
+Models = Servem para criar, validar e buscar os dados antes de serem enviados para o MongoDB
