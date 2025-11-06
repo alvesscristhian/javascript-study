@@ -1,0 +1,9 @@
+npm i express-session -> Ele cria e controla as sessões dos usuários (cookies, IDs de sessão, etc.).
+npm i connect-mongo -> É um adaptador (store) que salva as express-session no MongoDB.
+npm i connect-flash -> Uma flash message é uma mensagem temporária que você salva na sessão para exibir uma única vez — geralmente após um redirecionamento.                                                                   
+
+req.session.usuario 
+
+req.flash('info', 'Olá mundo!');
+    req.flash('error', 'Error!');
+    req.flash('success', 'Logado!');
