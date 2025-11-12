@@ -1,26 +1,29 @@
-require('dotenv').config(); // Importa e configura o dotenv
-const express = require('express'); // Import Express
-const app = express(); // Run express
-const mongoose = require('mongoose'); // Import Mongoose
-mongoose.connect(process.env.CONNECTIONSTRING) // Importa a chave do .env e roda o Mongoose
-    .then(() => { // Resolve a promise da conexão
-        app.emit('pronto'); // Cria um evento que emite um sinal
+require('dotenv').config(); // Configura as variaveis ambientes de desenvolvimento (privadas)
+const express = require('express'); // Importa o Express
+const app = express(); // Inicia o Express
+const mongoose = require('mongoose'); // Importa o mongoose (modelador do banco de dados)
+mongoose.connect(process.env.CONNECTIONSTRING) // Conecta o mongoose com a chave da base de dados
+    .then(() => {
+        app.emit('pronto'); // Aplicativo emite um evento sinalizando que o mongoose está pronto
     })
-    .catch(e => console.log(e)); // Captura um possivel erro e trata
-const session = require('express-session'); // Import Express Session
-const MongoStore = require('connect-mongo'); // Import MongoStore
-const flash = require('connect-flash'); // Import Flash Messages
-const routes = require('./routes'); // Import Routes
-const path = require('path'); // Import Path Files
-const helmet = require('helmet'); // Importar o Helmet
-const csrf = require('csurf'); // Import csurf
-const { middlewareGlobal, checkCsurfError, sendAllCsurf } = require('./src/middlewares/middleware'); // Import Middlewares
+    .catch(e => console.log(e));
+const session = require('express-session'); // Identificar o navegador de um cliente, salvando um Cookie com ID do cliente
+const MongoStore = require('connect-mongo'); // Salva as sessões dentro da base de dados
+const flash = require('connect-flash'); // Mensagens que ao ler são deletadas da base de dados. São salvas em sessão
+const routes = require('./routes'); // Rotas da nossa aplicação, exemplo: /home, /contato, etc...
+const path = require('path'); // Trabalhar com caminhos de pastas e arquivos
+const helmet = require('helmet'); // Protege a aplicação definindo cabeçalhos HTTP de segurança, agindo como middleware
+const csrf = require('csurf'); // CSRF Tokens que criamos para nossos formulários, impossibilitando POST's estrangeiros
+const { middlewareGlobal, checkCsurfError, sendAllCsurf } = require('./src/middlewares/middleware'); 
+// Middlewares = Funções executadas no meio da rota antes/depois de responder o cliente
 
-app.use(helmet()); // Executar o Helmet
-app.use(express.urlencoded({ extended: true })); // Parse to req.body
-app.use(express.static(path.resolve(__dirname, 'public'))); // Serve arquivo estático
+app.use(helmet()); // Executa o Helmet
 
-const sessionOptions = session({ // Session Configs
+app.use(express.urlencoded({ extended: true })); // Libera POST de formulários para dentro de nossa aplicação
+app.use(express.json()); // Faz parse de JSON para dentro da aplicação
+app.use(express.static(path.resolve(__dirname, 'public'))); // Todos os arquivos estáticos que podem ser acessados diretamente: img,css,js, etc...
+
+const sessionOptions = session({ // Configurações de sessão
     secret: 'id991', // Assinar cookie de ID da sessão
     store: new MongoStore({ mongoUrl: process.env.CONNECTIONSTRING }), // Local de Armazenamento
     resave: false, // Salva novamente?
@@ -31,20 +34,21 @@ const sessionOptions = session({ // Session Configs
         httpOnly: true // Acesso somente via HTTP?
     }
 });
-app.use(sessionOptions);
-app.use(flash());
+app.use(sessionOptions); // Usa as configs de sessão
+app.use(flash()); // Usa as flashmessages
 
-app.set('views', path.resolve(__dirname, 'src', 'views')); // Seta o caminho absoluto do view
-app.set('view engine', 'ejs'); // View engine
+app.set('views', path.resolve(__dirname, 'src', 'views')); // Views são arquivos que renderizam na tela
+app.set('view engine', 'ejs'); // Engine que estamos usando para renderizar HTML
 
-app.use(csrf());
+app.use(csrf()); // Configurando CSRF Tokens
+
 // Nossos Middlewares
 app.use(middlewareGlobal); // MiddleWare Global
 app.use(checkCsurfError); // Middleware Error Token
 app.use(sendAllCsurf); // Middleware Envia Token
-app.use(routes); // Nossas rotas
+app.use(routes); // Usando nossas rotas
 
-app.on('pronto', () => { // Chama o evento e declara o callback
+app.on('pronto', () => { // Escuta o evento e começa a ouvir requisições
     app.listen(3000, () => {
         console.log('Acessar http://localhost:3000');
         console.log('Servidor executando na porta 3000!');
