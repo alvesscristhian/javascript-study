@@ -4,9 +4,11 @@ exports.middlewareGlobal = (req, res, next) => {
 };
 
 exports.checkCsurfError = (err, req, res, next) => {
-    if (err && err.code === 'EBADCSRFTOKEN') {
+    if (err) {
         return res.render('404'); // Renderiza erro na tela e intercepta
     }
+
+    next();
 };
 
 exports.sendAllCsurf = (req, res, next) => {
