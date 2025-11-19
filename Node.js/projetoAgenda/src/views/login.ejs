@@ -8,11 +8,14 @@
         <div class="col-lg-8 my-3">
             <h1 class="text-center">Acesse sua conta</h1>
             <p class="text-center lead mb-5">Faça login ou crie sua conta abaixo</p>
+            
+            <%- include('includes/messages') %>
+
             <div class="row">
             
                 <div class="col-lg shadow p-3 mb-5 bg-white rounded mx-3">
                     <h4 class="text-center">Cadastrar</h4>
-                    <p>Se você ainda não cadastrou uma conta, preencha o formulário abaixo:</p>
+                    <p>Se você ainda não cadastrou uma conta, preencha seus dados abaixo:</p>
 
                     <form action="/login/register" method="POST">
                         <input type="hidden" name="_csrf" value=<%= csrfToken %>>
@@ -22,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label>Sua senha</label>
-                            <input type="password" class="form-control" name="senha" placeholder="Digite sua senha">
+                            <input type="password" class="form-control" name="password" placeholder="Digite sua senha">
                         </div>
                         <button type="submit" class="btn btn-primary text-white">Cadastrar</button>
                     </form>
@@ -41,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label>Sua senha</label>
-                            <input type="password" class="form-control" name="senha" placeholder="Digite sua senha">
+                            <input type="password" class="form-control" name="password" placeholder="Digite sua senha">
                         </div>
                         <button type="submit" class="btn btn-primary text-white">Entrar</button>
                     </form>

@@ -1,6 +1,7 @@
 exports.middlewareGlobal = (req, res, next) => {
-    res.locals.umaVariavelLocal = 'Valor da váriavel local'; // Envia essa variavel para vies
-    next(); // Passa para próxima função
+    res.locals.errors = req.flash('errors');
+    res.locals.success = req.flash('success');
+    next();
 };
 
 exports.checkCsurfError = (err, req, res, next) => {
