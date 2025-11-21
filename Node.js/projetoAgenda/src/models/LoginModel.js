@@ -1,8 +1,9 @@
 const mongoose = require('mongoose'); // Importa o mongoose
-const validator = require('validator');
-const bcryptjs = require('bcryptjs');
+const validator = require('validator'); // Validador de email com isEmail()
+const bcryptjs = require('bcryptjs'); // Cria hash de senha do usuário
 
 const LoginSchema = new mongoose.Schema({ // Cria uma instância de um schema para o mongoose, servindo para declarar e modelar dados
+    usuario: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true }
 });
@@ -16,6 +17,26 @@ class Login {
         this.user = null;
     }
 
+    async login() {
+        this.valida();
+        if (this.errors.length > 0) return;
+        this.user = await LoginModel.findOne({ email: this.body.email }); // Primeiro documento que responde na busca especifica
+
+        if (!this.user) {
+            this.errors.push('Usuário ou senha inválida.');
+            return;
+        }
+
+        // Body = dados do form | User = dados do usuario instanciado na base de dados
+        if (!bcryptjs.compareSync(this.body.password, this.user.password)) { // Compara a senha com o hash que está no MongoDB
+            this.errors.push('Senha inválida');
+            this.user = null;
+            return;
+        }
+
+
+    }
+
     async register() {
         this.valida();
         if (this.errors.length > 0) return;
@@ -24,20 +45,15 @@ class Login {
 
         if (this.errors.length > 0) return;
 
-        const salt = bcryptjs.genSaltSync();
-        this.body.password = bcryptjs.hashSync(this.body.password, salt);
+        const salt = bcryptjs.genSaltSync(); // Gera um salt, que é um valor aleatório usado para tornar o hash mais seguro.
+        this.body.password = bcryptjs.hashSync(this.body.password, salt); // Combina com o salt gerado e gera um hash criptografado.
 
-        try {
-            this.user = await LoginModel.create(this.body);
-        } catch (e) {
-            console.log(e);
-        }
-
+        this.user = await LoginModel.create(this.body); // Instancia na base de dados utilizando o model, após todas os cheks
     }
 
     async userExists() {
-        const user = await LoginModel.findOne({ email: this.body.email });
-        if (user) this.errors.push('Usuário já existe.');
+        this.user = await LoginModel.findOne({ email: this.body.email });
+        if (this.user) this.errors.push('Usuário já existe.');
     }
 
     valida() {
@@ -56,6 +72,7 @@ class Login {
         };
 
         this.body = {
+            usuario: this.body.usuario,
             email: this.body.email,
             password: this.body.password
         };
