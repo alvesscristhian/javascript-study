@@ -17,3 +17,15 @@ exports.sendAllCsurf = (req, res, next) => {
     res.locals.csrfToken = req.csrfToken(); // Cria token e envia para views local
     next(); // Passa para a próxima
 };
+
+exports.loginRequired = (req, res, next) => {
+    if (!req.session.user) { // Se o usuario não tiver uma sessão ativa não roda
+        req.flash('errors', 'Você precisa fazer login.');
+        req.session.save(() => {
+            res.redirect('/');
+            return;
+        });
+        return;
+    }
+    next();
+};
