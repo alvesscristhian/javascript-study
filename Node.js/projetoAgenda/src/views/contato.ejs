@@ -12,23 +12,27 @@
                     <%- include('includes/messages') %>
 
                         <form action="/contato/register" class="col-lg shadow p-5 bg-white rounded " method="POST">
-                            <input type="hidden" name="_csrf" value=<%=csrfToken %>>
+                            <input type="hidden" name="_csrf" value=<%= csrfToken %>>
                             <div class="form-group">
                                 <label>Nome completo</label>
-                                <input type="text" class="form-control" name="nome" placeholder="Digite seu nome" required>
+                                <input value="<%= contato.nome %>" type="text" class="form-control" name="nome" placeholder="Digite seu nome">
                             </div>
                             <div class="form-group">
                                 <label>Telefone</label>
-                                <input type="text" data-mask="(00) 00000-0000" class="form-control" name="telefone" placeholder="Digite seu telefone" required>
+                                <input value="<%= contato.telefone %>" type="tel" class="form-control" name="telefone" placeholder="Digite seu telefone">
                             </div>
                             <div class="form-group">
                                 <label>Serviço</label>
-                                <select class="form-control" name="servico" required>
+                                <select value="<%= contato.servico %>" class="form-control" name="servico">
                                     <option disabled selected>Escolha o serviço desejado</option>
                                     <option value="corte">Corte</option>
                                     <option value="barba">Barba</option>
                                     <option value="completo">Corte + Barba</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Data de agendamento</label>
+                                <input value="<%= contato.data %>" type="datetime-local" class="form-control" name="data">
                             </div>
                             <button type="submit" class="btn btn-primary text-white">Agendar</button>
                         </form>

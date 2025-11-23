@@ -2,26 +2,41 @@ const mongoose = require('mongoose'); // Importa o mongoose
 const validator = require('validator');
 
 const ContatoSchema = new mongoose.Schema({ // Cria uma instância de um schema para o mongoose, servindo para declarar e modelar dados
-    titulo: { type: String, required: true },
-    descricao: String
+    nome: { type: String, required: true },
+    telefone: { type: String, required: false },
+    servico: { type: String, required: true },
+    data: { type: String, required: true },
+    criadoEm: { type: Date, default: Date.now }
 });
 
-const ContatoModel = mongoose.model('Contato', ContatoSchema); // Cria um Model do Schema instanciado
+const ContatoModel = mongoose.model('Agendamento', ContatoSchema); // Cria um Model do Schema instanciado
 
 class Contato {
     constructor(body) {
         this.body = body;
         this.errors = [];
-        this.Contato = null;
+        this.contato = null;
     }
 
-    register() {
+    static async buscaPorId(id) {
+        if (typeof id !== 'string') return;
+        const user = await ContatoModel.findById(id);
+        return user;
+    }
+
+    async register() {
         this.valida();
+        if (this.errors.length > 0) return;
+        this.contato = await ContatoModel.create(this.body);
     }
 
     valida() {
         this.cleanUp();
-        if (!validator.isMobilePhone('(13) 98837-2703', 'pt-BR'));
+        if (this.body.telefone.length < 11) this.errors.push('Telefone inválido.');
+        if (!this.body.nome) this.errors.push('Nome é um campo obrigatório.');
+        if (!this.body.telefone) this.errors.push('Telefone é um campo obrigatório.');
+        if (!this.body.servico) this.errors.push('Serviço é um campo obrigatório.');
+        if (!this.body.data) this.errors.push('Data de agendamento é um campo obrigatório.');
     }
 
     cleanUp() {
@@ -34,6 +49,8 @@ class Contato {
         this.body = {
             nome: this.body.nome,
             telefone: this.body.telefone,
+            servico: this.body.servico,
+            data: this.body.data
         };
     }
 }
