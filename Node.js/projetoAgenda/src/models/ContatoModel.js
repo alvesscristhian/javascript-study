@@ -52,7 +52,14 @@ class Contato {
             servico: this.body.servico,
             data: this.body.data
         };
+    };
+
+    async edit(id) {
+        if(typeof id !== 'string') return;
+        this.valida();
+        if(this.errors.length > 0) return;
+        this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true }); // Faz uma busca pelo ID e atualiza os dados do body
     }
-}
+};
 
 module.exports = Contato;
