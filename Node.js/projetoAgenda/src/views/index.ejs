@@ -11,16 +11,24 @@
 
             <%- include('includes/messages') %>
 
+            <% if(agendamentos.length > 0) { %>
             <div class="responsive-table">
                 <table class="table my-3">
+                    <% agendamentos.forEach(agendamento => { %>
                     <tr>
-                        <td>Cristhian Alves</td>
-                        <td>(13) 98837-2703</td>
-                        <td>Corte + Barba</td>
-                        <td>21/12/2025 - 14:00</td>
+                        <td><%= agendamento.nome %></td>
+                        <td><%= agendamento.telefone %></td>
+                        <td><%= agendamento.servico %></td>
+                        <td><%= agendamento.data %></td>
+                        <td><a href="/contato/index/<%= agendamento._id %>">Editar</a></td>
+                        <td><a class="text-danger" href="/contato/delete/<%= agendamento._id %>">Excluir</a></td>
                     </tr>
+                    <% }); %>
                 </table>
             </div>
+            <% } else { %>
+                <p class="text-center lead">Não existem serviços agendados.</p>
+            <% } %>
         </div>
 
         <div class="col-lg-2"></div>

@@ -18,12 +18,6 @@ class Contato {
         this.contato = null;
     }
 
-    static async buscaPorId(id) {
-        if (typeof id !== 'string') return;
-        const user = await ContatoModel.findById(id);
-        return user;
-    }
-
     async register() {
         this.valida();
         if (this.errors.length > 0) return;
@@ -59,7 +53,27 @@ class Contato {
         this.valida();
         if(this.errors.length > 0) return;
         this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true }); // Faz uma busca pelo ID e atualiza os dados do body
-    }
+    };
+
+    
+    // Métodos etáticos
+    static async buscaPorId(id) {
+        if (typeof id !== 'string') return;
+        const user = await ContatoModel.findById(id);
+        return user;
+    };
+
+    static async buscaClientes() {
+                            // .sort(): É usado para ordenar os resultados retornados por uma operação de consulta (como o .find())
+        const agendamentos = await ContatoModel.find().sort({ criadoEm: -1 }); // 1 para ordem crescente e -1 para ordem decrescente
+        return agendamentos;
+    };
+
+    static async delete(id) {
+        if(typeof id !== 'string') return;
+        const agendamento = await ContatoModel.findOneAndDelete(id); // Busca pelo ID e delete da base de dados
+        return agendamento;
+    };
 };
 
 module.exports = Contato;
