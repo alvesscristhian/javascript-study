@@ -29,7 +29,7 @@ class Login {
 
         // Body = dados do form | User = dados do usuario instanciado na base de dados
         if (!bcryptjs.compareSync(this.body.password, this.user.password)) { // Compara a senha com o hash que está no MongoDB
-            this.errors.push('Senha inválida');
+            this.errors.push('Usuário não existe.');
             this.user = null;
             return;
         }
