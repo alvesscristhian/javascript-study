@@ -1,9 +1,10 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+import Cadastro from './modules/Cadastro'
 import Login from './modules/Login';
 
 const login = new Login('.form-login');
-const cadastro = new Login('.form-cadastro');
+const cadastro = new Cadastro('.form-cadastro');
 login.init();
 cadastro.init();

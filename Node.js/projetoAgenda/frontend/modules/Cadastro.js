@@ -1,6 +1,6 @@
 import validator from 'validator';
 
-export default class Login {
+export default class Cadastro {
     constructor(formClass) {
         this.form = document.querySelector(formClass);
     }
@@ -19,14 +19,23 @@ export default class Login {
 
     validate(e) {
         const el = e.target;
+        const userInput = el.querySelector('input[name="usuario"]')
         const emailInput = el.querySelector('input[name="email"]');
         const passwordInput = el.querySelector('input[name="password"]');
-
-        const errorEmail = document.querySelector('.login-email');
-        const errorPassword = document.querySelector('.login-password');
+        
+        const errorUser = document.querySelector('.erro-user');
+        const errorEmail = document.querySelector('.erro-email');
+        const errorPassword = document.querySelector('.erro-password');
+        errorUser.innerHTML = '';
         errorEmail.innerHTML = '';
         errorPassword.innerHTML = '';
+
         let error = false;
+
+        if (userInput.value.length == 0) {
+            errorUser.innerHTML = 'Usuário não pode estar vazio';
+            error = true;
+        }
 
         if (!validator.isEmail(emailInput.value)) {
             errorEmail.innerHTML = 'E-mail inválido';
