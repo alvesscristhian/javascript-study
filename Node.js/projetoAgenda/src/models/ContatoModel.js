@@ -26,7 +26,7 @@ class Contato {
 
     valida() {
         this.cleanUp();
-        if (this.body.telefone.length < 11) this.errors.push('Telefone inválido.');
+        if (this.body.telefone.length !== 11 || this.body.telefone.length > 11) this.errors.push('Telefone inválido.');
         if (!this.body.nome) this.errors.push('Nome é um campo obrigatório.');
         if (!this.body.telefone) this.errors.push('Telefone é um campo obrigatório.');
         if (!this.body.servico) this.errors.push('Serviço é um campo obrigatório.');
@@ -44,7 +44,7 @@ class Contato {
             nome: this.body.nome,
             telefone: this.body.telefone,
             servico: this.body.servico,
-            data: this.body.data
+            data: this.formataData(this.body.data)
         };
     };
 
@@ -54,6 +54,19 @@ class Contato {
         if (this.errors.length > 0) return;
         this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true }); // Faz uma busca pelo ID e atualiza os dados do body
     };
+    
+    formataData(dataDB) {
+        const data = new Date(dataDB);
+
+        const dia = String(data.getDate()).padStart(2, "0");
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const ano = String(data.getFullYear());
+
+        const horas = String(data.getHours()).padStart(2, "0");
+        const minutos = String(data.getMinutes()).padStart(2, "0");
+
+        return `${dia}/${mes}/${ano} - ${horas}:${minutos}`
+    }
 
 
     // Métodos etáticos
