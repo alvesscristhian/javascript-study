@@ -1,3 +1,4 @@
+// O Sequelize facilita a interação com bancos de dados SQL sem precisar sair do node
 const { resolve } = require('path');
 
 module.exports = {

@@ -1,7 +1,7 @@
 // Migrações: Servem para gerenciar e versionar a estrutura do banco de dados
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('alunos', { // Cria a tabela alunos no banco de dados
+    await queryInterface.createTable('users', { // Cria a tabela alunos no banco de dados
       id: {
         type: Sequelize.INTEGER, // Define o tipo: String/Integer/Char/Float/Date/Boolean
         allowNull: false, // Permissão para deixar esse campo nulo?
@@ -12,24 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      sobrenome: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      idade: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      peso: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-      },
-      altura: {
-        type: Sequelize.FLOAT,
+      password_hash: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
@@ -44,6 +33,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('alunos');
+    await queryInterface.dropTable('users');
   },
 };
