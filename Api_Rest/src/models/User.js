@@ -45,7 +45,9 @@ export default class User extends Model { // Cria uma modelo de dados User
     });
 
     this.addHook('beforeSave', async (user) => { // Adiciona um hook
-      user.password_hash = await bcryptjs.hash(user.password, 8);
+      if (user.password) {
+        user.password_hash = await bcryptjs.hash(user.password, 8);
+      }
     });
 
     return this;
