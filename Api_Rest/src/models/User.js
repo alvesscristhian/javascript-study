@@ -44,12 +44,16 @@ export default class User extends Model { // Cria uma modelo de dados User
       sequelize,
     });
 
-    this.addHook('beforeSave', async (user) => { // Adiciona um hook
+    this.addHook('beforeSave', async (user) => { // Adiciona um hook que cria um hash
       if (user.password) {
         user.password_hash = await bcryptjs.hash(user.password, 8);
       }
     });
 
     return this;
+  }
+
+  passwordIsValid(password) { // Compara o password com o hash dele
+    return bcryptjs.compare(password, this.password_hash);
   }
 }
