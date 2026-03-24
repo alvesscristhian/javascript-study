@@ -23,8 +23,8 @@ module.exports = {
           model: 'alunos', // Referência a tabela alunos pela chave id
           key: 'id',
         },
-        onDelete: 'SET NULL',
-        onUpdate: '',
+        onDelete: 'SET NULL', // Se apagar/att pk do pai a fk filho is null
+        onUpdate: 'CASCADE', // Se a pk pai alterar, vai refletir no registro filho
       },
       created_at: {
         type: Sequelize.DATE,
