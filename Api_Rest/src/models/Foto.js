@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize'; // Sequelize serve para trocar informações com o banco de dados SQL
+import appConfig from '../config/appConfig';
 
 export default class Foto extends Model { // Cria uma modelo de dados Foto
   static init(sequelize) {
@@ -19,6 +20,12 @@ export default class Foto extends Model { // Cria uma modelo de dados Foto
           notEmpty: {
             msg: 'Campo não pode ficar vazio.',
           },
+        },
+      },
+      url: {
+        type: Sequelize.VIRTUAL,
+        get() {
+          return `${appConfig.url}/images/${this.getDataValue('filename')}`;
         },
       },
     }, {

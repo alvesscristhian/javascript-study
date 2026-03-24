@@ -8,7 +8,7 @@ class AlunoController {
       order: [['id', 'DESC'], [Foto, 'id', 'DESC']], // Ordena a busca por crescente ou decrescente
       include: {
         model: Foto,
-        attributes: ['filename'],
+        attributes: ['url', 'filename'],
       },
     });
     return res.json(alunos);
@@ -40,7 +40,7 @@ class AlunoController {
         order: [['id', 'DESC'], [Foto, 'id', 'DESC']], // Ordena a busca por crescente ou decrescente
         include: {
           model: Foto,
-          attributes: ['filename'],
+          attributes: ['url', 'filename'],
         },
       });
 
